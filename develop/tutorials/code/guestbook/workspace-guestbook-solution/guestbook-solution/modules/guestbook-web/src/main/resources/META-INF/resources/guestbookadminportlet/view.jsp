@@ -20,13 +20,15 @@
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<aui:button-row cssClass="guestbook-admin-buttons">
-	<portlet:renderURL var="addGuestbookURL">
-		<portlet:param name="mvcPath"
-			value="/guestbookadminportlet/edit_guestbook.jsp" />
-		<portlet:param name="redirect" value="<%= "currentURL" %>" />
-	</portlet:renderURL>
+<c:if test='<%= GuestbookModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_GUESTBOOK) %>'>
+	<aui:button-row cssClass="guestbook-admin-buttons">
+		<portlet:renderURL var="addGuestbookURL">
+			<portlet:param name="mvcPath"
+				value="/guestbookadminportlet/edit_guestbook.jsp" />
+			<portlet:param name="redirect" value="<%= "currentURL" %>" />
+		</portlet:renderURL>
 
-	<aui:button onClick="<%= addGuestbookURL.toString() %>"
-		value="Add Guestbook" />
-</aui:button-row>
+		<aui:button onClick="<%= addGuestbookURL.toString() %>"
+			value="Add Guestbook" />
+	</aui:button-row>
+</c:if>

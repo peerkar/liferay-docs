@@ -3,6 +3,17 @@
 <%
 	long guestbookId = Long.valueOf((Long) renderRequest
 			.getAttribute("guestbookId"));
+
+	// On a live site in a staged environment there might not be any guestbooks available.
+
+	if (guestbookId == 0) {
+		%>
+			<div class="alert alert-info">
+				<liferay-ui:message key="there-are-no-guestbooks-available" />
+			</div>
+		<%
+		return;
+	}
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -58,7 +69,7 @@
 <aui:button-row cssClass="guestbook-buttons">
 
 	
-     <c:if test='<%= GuestbookModelPermission.contains(permissionChecker, scopeGroupId, "ADD_GUESTBOOK") %>'>
+     <c:if test='<%= GuestbookModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_GUESTBOOK) %>'>
  
   		
 		<portlet:renderURL var="addGuestbookURL">
@@ -70,7 +81,7 @@
 
 	</c:if>	
 	
-		<c:if test='<%= GuestbookPermission.contains(permissionChecker, guestbookId, "ADD_ENTRY") %>'>
+		<c:if test='<%= GuestbookPermission.contains(permissionChecker, guestbookId, ActionKeys.ADD_ENTRY) %>'>
 	
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="mvcPath" value="/guestbookwebportlet/edit_entry.jsp" />
@@ -103,4 +114,3 @@
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
-

@@ -10,6 +10,7 @@
 		        %>
 
 		        <liferay-ui:icon-menu>
+				    	 <c:if test='<%= GuestbookPermission.contains(permissionChecker, guestbook.getGuestbookId(), ActionKeys.UPDATE) %>'>
 		                        <portlet:renderURL var="editURL">
 		                                <portlet:param name="guestbookId"
 		                                        value="<%=String.valueOf(guestbook.getGuestbookId()) %>" />
@@ -19,12 +20,14 @@
 
 		                        <liferay-ui:icon image="edit" message="Edit"
 		                                url="<%=editURL.toString() %>" />
-
+						</c:if>
 		                        <liferay-security:permissionsURL
 		                                modelResource="<%= Guestbook.class.getName() %>"
 		                                modelResourceDescription="<%= guestbook.getName() %>"
 		                                resourcePrimKey="<%= String.valueOf(guestbook.getGuestbookId()) %>"
 		                                var="permissionsURL" />
+
+			    	 <c:if test='<%= GuestbookPermission.contains(permissionChecker, guestbook.getGuestbookId(), ActionKeys.DELETE) %>'>
 
 		                        <portlet:actionURL name="deleteGuestbook" var="deleteURL">
 		                                <portlet:param name="guestbookId"
@@ -32,5 +35,6 @@
 		                        </portlet:actionURL>
 
 		                        <liferay-ui:icon-delete url="<%=deleteURL.toString() %>" />
+					</c:if>
 
 		        </liferay-ui:icon-menu>

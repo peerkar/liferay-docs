@@ -24,6 +24,7 @@
 <%@ page import="com.liferay.docs.guestbook.service.permission.GuestbookModelPermission" %>
 <%@ page import="com.liferay.docs.guestbook.service.permission.GuestbookPermission" %>
 <%@ page import="com.liferay.docs.guestbook.service.permission.EntryPermission" %>
+<%@ page import="com.liferay.docs.guestbook.util.ActionKeys" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ page import="com.liferay.portal.kernel.exception.PortalException" %>
@@ -43,7 +44,6 @@
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
 
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
