@@ -20,7 +20,7 @@ import com.liferay.docs.guestbook.service.base.GuestbookLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 
 
 /**
