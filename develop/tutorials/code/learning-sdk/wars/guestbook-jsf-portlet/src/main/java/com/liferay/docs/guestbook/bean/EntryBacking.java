@@ -13,13 +13,20 @@
  */
 package com.liferay.docs.guestbook.bean;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import com.liferay.docs.guestbook.service.EntryLocalServiceUtil;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 import com.liferay.docs.guestbook.service.persistence.EntryUtil;
 import com.liferay.docs.guestbook.wrappers.Entry;
+import com.liferay.docs.guestbook.service.EntryLocalServiceTracker;
+import com.liferay.docs.guestbook.service.EntryLocalService;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 
@@ -32,6 +39,14 @@ import com.liferay.faces.portal.context.LiferayFacesContext;
 public class EntryBacking extends AbstractBacking {
 
 	private Boolean hasAddPermission;
+
+	private EntryLocalServiceTracker entryLocalServiceTracker;
+	
+	public EntryLocalService getEntryLocalService() {
+		EntryLocalService entryLocalService = entryLocalServiceTracker.getService();
+	
+		return entryLocalService;
+	}
 
 	@ManagedProperty(name = "guestbookBacking", value = "#{guestbookBacking}")
 	protected GuestbookBacking guestbookBacking;
@@ -52,7 +67,7 @@ public class EntryBacking extends AbstractBacking {
 	public void delete(Entry entry) {
 
 		try {
-			EntryLocalServiceUtil.deleteEntry(entry);
+			getEntryLocalService().deleteEntry(entry);
 			addGlobalSuccessInfoMessage();
 		}
 		catch (Exception e) {
@@ -68,6 +83,19 @@ public class EntryBacking extends AbstractBacking {
 		guestbookBacking.editEntry();
 	}
 
+	@PostConstruct
+	public void postConstruct() {
+		Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+		BundleContext bundleContext = bundle.getBundleContext();
+		entryLocalServiceTracker = new EntryLocalServiceTracker(bundleContext);
+		entryLocalServiceTracker.open();
+	}
+
+	@PreDestroy
+	public void preDestroy() {
+		entryLocalServiceTracker.close();
+	}
+
 	public void save() {
 
 		Entry entry = guestbookBacking.getSelectedEntry();
@@ -78,10 +106,10 @@ public class EntryBacking extends AbstractBacking {
 		try {
 
 			if (entry.getEntryId() == 0) {
-				EntryLocalServiceUtil.addEntry(entry, liferayFacesContext.getUserId());
+				getEntryLocalService().addEntry(entry, liferayFacesContext.getUserId());
 			}
 			else {
-				EntryLocalServiceUtil.updateEntry(entry);
+				getEntryLocalService().updateEntry(entry);
 			}
 
 			addGlobalSuccessInfoMessage();

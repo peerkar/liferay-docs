@@ -17,13 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import com.liferay.docs.guestbook.wrappers.Entry;
-import com.liferay.docs.guestbook.service.EntryLocalServiceUtil;
-import com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
+import com.liferay.docs.guestbook.service.EntryLocalService;
+import com.liferay.docs.guestbook.service.EntryLocalServiceTracker;
+import com.liferay.docs.guestbook.service.GuestbookLocalService;
+import com.liferay.docs.guestbook.service.GuestbookLocalServiceTracker;
 import com.liferay.docs.guestbook.service.persistence.GuestbookUtil;
+import com.liferay.docs.guestbook.wrappers.Entry;
 
 import com.liferay.docs.guestbook.wrappers.Guestbook;
 
@@ -42,6 +49,22 @@ public class GuestbookBacking extends AbstractBacking {
 	public static final String DEFAULT_GUESTBOOK_NAME = "Main";
 	public static final String MODEL = "com.liferay.docs.guestbook.model";
 
+	private GuestbookLocalServiceTracker guestbookLocalServiceTracker;
+	private EntryLocalServiceTracker entryLocalServiceTracker;
+	
+	public GuestbookLocalService getGuestbookLocalService() {
+		GuestbookLocalService guestbookLocalService = guestbookLocalServiceTracker.getService();
+	
+		return guestbookLocalService;
+	}
+	
+	public EntryLocalService getEntryLocalService() {
+		EntryLocalService entryLocalService = entryLocalServiceTracker.getService();
+	
+		return entryLocalService;
+	}
+	
+	
 	private Boolean hasAddPermission;
 
 	// Private Data Members
@@ -80,7 +103,7 @@ public class GuestbookBacking extends AbstractBacking {
 			long scopeGroupId = liferayFacesContext.getScopeGroupId();
 
 			com.liferay.docs.guestbook.model.Guestbook defaultGuestbook = (com.liferay.docs.guestbook.model.Guestbook)
-				GuestbookLocalServiceUtil.getFirstGuestbookByName(scopeGroupId, DEFAULT_GUESTBOOK_NAME);
+				getGuestbookLocalService().getFirstGuestbookByName(scopeGroupId, DEFAULT_GUESTBOOK_NAME);
 
 			// Create the default guestbook if it does not exist in the database
 			if (defaultGuestbook == null) {
@@ -91,7 +114,7 @@ public class GuestbookBacking extends AbstractBacking {
 				guestbook.setGroupId(scopeGroupId);
 				guestbook.setCompanyId(liferayFacesContext.getCompanyId());
 				guestbook.setUserId(liferayFacesContext.getUserId());
-				GuestbookLocalServiceUtil.addGuestbook(guestbook);
+				getGuestbookLocalService().addGuestbook(guestbook);
 			}
 		}
 		catch (Exception e) {
@@ -105,7 +128,7 @@ public class GuestbookBacking extends AbstractBacking {
 		deleteGuestbookEntries();
 
 		try {
-			GuestbookLocalServiceUtil.deleteGuestbook(guestbook);
+			getGuestbookLocalService().deleteGuestbook(guestbook);
 			addGlobalSuccessInfoMessage();
 		}
 		catch (Exception e) {
@@ -134,7 +157,7 @@ public class GuestbookBacking extends AbstractBacking {
 		for (Entry entry : entries) {
 
 			try {
-				EntryLocalServiceUtil.deleteEntry(entry);
+				getEntryLocalService().deleteEntry(entry);
 				addGlobalSuccessInfoMessage();
 			}
 			catch (Exception e) {
@@ -161,7 +184,21 @@ public class GuestbookBacking extends AbstractBacking {
 
 	@PostConstruct
 	public void postConstruct() {
+		Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+		BundleContext bundleContext = bundle.getBundleContext();
+		guestbookLocalServiceTracker = new GuestbookLocalServiceTracker(bundleContext);
+		guestbookLocalServiceTracker.open();
+		
+		entryLocalServiceTracker = new EntryLocalServiceTracker(bundleContext);
+		entryLocalServiceTracker.open();
+
 		createMainGuestbook();
+	}
+
+	@PreDestroy
+	public void preDestroy() {
+		guestbookLocalServiceTracker.close();
+		entryLocalServiceTracker.close();
 	}
 
 	public void save() {
@@ -173,11 +210,11 @@ public class GuestbookBacking extends AbstractBacking {
 		try {
 
 			if (guestbook.getGuestbookId() == 0) {
-				guestbook = new Guestbook(GuestbookLocalServiceUtil.addGuestbook(guestbook,
+				guestbook = new Guestbook(getGuestbookLocalService().addGuestbook(guestbook,
 							liferayFacesContext.getUserId()));
 			}
 			else {
-				guestbook = new Guestbook(GuestbookLocalServiceUtil.updateGuestbook(guestbook));
+				guestbook = new Guestbook(getGuestbookLocalService().updateGuestbook(guestbook));
 			}
 
 			addGlobalSuccessInfoMessage();
@@ -229,7 +266,7 @@ public class GuestbookBacking extends AbstractBacking {
 					logger.info("getEntries: selectedGuestbook == null ... ");
 				}
 				else {
-					List<com.liferay.docs.guestbook.model.Entry> list = EntryLocalServiceUtil.getEntries(scopeGroupId,
+					List<com.liferay.docs.guestbook.model.Entry> list = getEntryLocalService().getEntries(scopeGroupId,
 							selectedGuestbook.getGuestbookId());
 
 					for (com.liferay.docs.guestbook.model.Entry entry : list) {
@@ -258,7 +295,7 @@ public class GuestbookBacking extends AbstractBacking {
 			try {
 				guestbooks = new ArrayList<Guestbook>();
 
-				List<com.liferay.docs.guestbook.model.Guestbook> list = GuestbookLocalServiceUtil.getGuestbooks(
+				List<com.liferay.docs.guestbook.model.Guestbook> list = getGuestbookLocalService().getGuestbooks(
 						scopeGroupId);
 
 				for (com.liferay.docs.guestbook.model.Guestbook guestbook : list) {
@@ -322,7 +359,7 @@ public class GuestbookBacking extends AbstractBacking {
 
 			try {
 				com.liferay.docs.guestbook.model.Guestbook firstGuestbookByName =
-					(com.liferay.docs.guestbook.model.Guestbook) GuestbookLocalServiceUtil.getFirstGuestbookByName(
+					(com.liferay.docs.guestbook.model.Guestbook) getGuestbookLocalService().getFirstGuestbookByName(
 						scopeGroupId, DEFAULT_GUESTBOOK_NAME);
 
 				if (firstGuestbookByName == null) {
