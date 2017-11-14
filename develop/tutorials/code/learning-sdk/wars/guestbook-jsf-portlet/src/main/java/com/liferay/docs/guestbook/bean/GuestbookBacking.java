@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -34,8 +35,7 @@ import com.liferay.docs.guestbook.wrappers.Entry;
 
 import com.liferay.docs.guestbook.wrappers.Guestbook;
 
-import com.liferay.faces.portal.context.LiferayFacesContext;
-
+import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 
@@ -83,8 +83,8 @@ public class GuestbookBacking extends AbstractBacking {
 		setOriginalGuestbook(getSelectedGuestbook());
 
 		Guestbook guestbook = new Guestbook(GuestbookUtil.create(0L));
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-		guestbook.setGroupId(liferayFacesContext.getScopeGroupId());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		guestbook.setGroupId(LiferayPortletHelperUtil.getScopeGroupId(facesContext));
 		setSelectedGuestbook(guestbook);
 		editGuestbook();
 	}
@@ -99,8 +99,8 @@ public class GuestbookBacking extends AbstractBacking {
 
 		try {
 
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
 
 			com.liferay.docs.guestbook.model.Guestbook defaultGuestbook = (com.liferay.docs.guestbook.model.Guestbook)
 				getGuestbookLocalService().getFirstGuestbookByName(scopeGroupId, DEFAULT_GUESTBOOK_NAME);
@@ -112,8 +112,8 @@ public class GuestbookBacking extends AbstractBacking {
 				Guestbook guestbook = new Guestbook(GuestbookUtil.create(0L));
 				guestbook.setName(DEFAULT_GUESTBOOK_NAME);
 				guestbook.setGroupId(scopeGroupId);
-				guestbook.setCompanyId(liferayFacesContext.getCompanyId());
-				guestbook.setUserId(liferayFacesContext.getUserId());
+				guestbook.setCompanyId(LiferayPortletHelperUtil.getCompanyId(facesContext));
+				guestbook.setUserId(LiferayPortletHelperUtil.getUserId(facesContext));
 				getGuestbookLocalService().addGuestbook(guestbook);
 			}
 		}
@@ -203,15 +203,15 @@ public class GuestbookBacking extends AbstractBacking {
 
 	public void save() {
 		Guestbook guestbook = getSelectedGuestbook();
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-		guestbook.setCompanyId(liferayFacesContext.getCompanyId());
-		guestbook.setUserId(liferayFacesContext.getUserId());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		guestbook.setCompanyId(LiferayPortletHelperUtil.getCompanyId(facesContext));
+		guestbook.setUserId(LiferayPortletHelperUtil.getUserId(facesContext));
 
 		try {
 
 			if (guestbook.getGuestbookId() == 0) {
 				guestbook = new Guestbook(getGuestbookLocalService().addGuestbook(guestbook,
-							liferayFacesContext.getUserId()));
+						LiferayPortletHelperUtil.getUserId(facesContext)));
 			}
 			else {
 				guestbook = new Guestbook(getGuestbookLocalService().updateGuestbook(guestbook));
@@ -256,7 +256,8 @@ public class GuestbookBacking extends AbstractBacking {
 	public List<Entry> getEntries() {
 
 		if (entries == null) {
-			long scopeGroupId = LiferayFacesContext.getInstance().getScopeGroupId();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
 			Guestbook selectedGuestbook = getSelectedGuestbook();
 
 			try {
@@ -290,7 +291,8 @@ public class GuestbookBacking extends AbstractBacking {
 	public List<Guestbook> getGuestbooks() {
 
 		if (guestbooks == null) {
-			long scopeGroupId = LiferayFacesContext.getInstance().getScopeGroupId();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
 
 			try {
 				guestbooks = new ArrayList<Guestbook>();
@@ -319,9 +321,9 @@ public class GuestbookBacking extends AbstractBacking {
 	public Boolean getHasAddPermission() {
 
 		if (hasAddPermission == null) {
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
-			hasAddPermission = liferayFacesContext.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
+			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
 					MODEL, scopeGroupId, "ADD_GUESTBOOK");
 		}
 
@@ -355,7 +357,8 @@ public class GuestbookBacking extends AbstractBacking {
 	public Guestbook getSelectedGuestbook() {
 
 		if (selectedGuestbook == null) {
-			long scopeGroupId = LiferayFacesContext.getInstance().getScopeGroupId();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
 
 			try {
 				com.liferay.docs.guestbook.model.Guestbook firstGuestbookByName =

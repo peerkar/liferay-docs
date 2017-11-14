@@ -15,13 +15,14 @@ package com.liferay.docs.guestbook.wrappers;
 
 import javax.el.ELContext;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.liferay.docs.guestbook.model.EntryWrapper;
-import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.faces.util.jsp.PageContextAdapter;
 import com.liferay.faces.util.jsp.StringJspWriter;
 import com.liferay.faces.util.logging.Logger;
@@ -56,9 +57,9 @@ public class Entry extends EntryWrapper {
 	public Boolean getDeleteable() {
 
 		if (deleteable == null) {
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
-			deleteable = liferayFacesContext.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
+			deleteable = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
 					MODEL, getEntryId(), ActionKeys.DELETE);
 		}
 
@@ -68,9 +69,9 @@ public class Entry extends EntryWrapper {
 	public Boolean getPermissible() {
 
 		if (permissible == null) {
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
-			permissible = liferayFacesContext.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
+			permissible = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
 					MODEL, getEntryId(), ActionKeys.PERMISSIONS);
 		}
 
@@ -81,16 +82,16 @@ public class Entry extends EntryWrapper {
 
 		if (permissionsUrl == null) {
 
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			ExternalContext externalContext = liferayFacesContext.getExternalContext();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
 
 			// Get the underlying HttpServletRequest and HttpServletResponse
 			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 			PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
 			HttpServletResponse httpServletResponse = PortalUtil.getHttpServletResponse(portletResponse);
-			ELContext elContext = liferayFacesContext.getELContext();
+			ELContext elContext = facesContext.getELContext();
 			StringJspWriter stringJspWriter = new StringJspWriter();
 			PageContextAdapter pageContextAdapter = new PageContextAdapter(httpServletRequest, httpServletResponse,
 					elContext, stringJspWriter);
@@ -125,9 +126,9 @@ public class Entry extends EntryWrapper {
 	public Boolean getUpdateable() {
 
 		if (updateable == null) {
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
-			updateable = liferayFacesContext.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
+			updateable = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
 					MODEL, getEntryId(), ActionKeys.UPDATE);
 		}
 
@@ -137,9 +138,9 @@ public class Entry extends EntryWrapper {
 	public Boolean getViewable() {
 
 		if (viewable == null) {
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
-			viewable = liferayFacesContext.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
+			viewable = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
 					MODEL, getEntryId(), ActionKeys.VIEW);
 		}
 

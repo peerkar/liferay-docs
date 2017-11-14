@@ -13,7 +13,9 @@
  */
 package com.liferay.docs.guestbook.bean;
 
-import com.liferay.faces.portal.context.LiferayFacesContext;
+import javax.faces.context.FacesContext;
+
+import com.liferay.faces.util.context.FacesContextHelperUtil;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
@@ -27,13 +29,13 @@ abstract class AbstractBacking {
 	protected static final String SUCCESS_INFO_MSG_ID = "your-request-processed-successfully";
 
 	public void addGlobalSuccessInfoMessage() {
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-		liferayFacesContext.addGlobalSuccessInfoMessage();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		FacesContextHelperUtil.addGlobalSuccessInfoMessage(facesContext);
 	}
 
 	public void addGlobalUnexpectedErrorMessage() {
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-		liferayFacesContext.addGlobalUnexpectedErrorMessage();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		FacesContextHelperUtil.addGlobalUnexpectedErrorMessage(facesContext);
 	}
 
 }

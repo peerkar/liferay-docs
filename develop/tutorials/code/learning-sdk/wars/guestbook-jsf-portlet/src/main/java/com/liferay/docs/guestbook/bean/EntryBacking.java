@@ -18,6 +18,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -28,7 +29,7 @@ import com.liferay.docs.guestbook.wrappers.Entry;
 import com.liferay.docs.guestbook.service.EntryLocalServiceTracker;
 import com.liferay.docs.guestbook.service.EntryLocalService;
 
-import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 
 
 /**
@@ -53,8 +54,8 @@ public class EntryBacking extends AbstractBacking {
 
 	public void add() {
 		Entry entry = new Entry(EntryUtil.create(0L));
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-		entry.setGroupId(liferayFacesContext.getScopeGroupId());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		entry.setGroupId(LiferayPortletHelperUtil.getScopeGroupId(facesContext));
 		entry.setGuestbookId(guestbookBacking.getSelectedGuestbook().getGuestbookId());
 		guestbookBacking.setSelectedEntry(entry);
 		guestbookBacking.editEntry();
@@ -99,14 +100,14 @@ public class EntryBacking extends AbstractBacking {
 	public void save() {
 
 		Entry entry = guestbookBacking.getSelectedEntry();
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-		entry.setCompanyId(liferayFacesContext.getCompanyId());
-		entry.setUserId(liferayFacesContext.getUserId());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		entry.setCompanyId(LiferayPortletHelperUtil.getCompanyId(facesContext));
+		entry.setUserId(LiferayPortletHelperUtil.getUserId(facesContext));
 
 		try {
 
 			if (entry.getEntryId() == 0) {
-				getEntryLocalService().addEntry(entry, liferayFacesContext.getUserId());
+				getEntryLocalService().addEntry(entry, LiferayPortletHelperUtil.getUserId(facesContext));
 			}
 			else {
 				getEntryLocalService().updateEntry(entry);
@@ -129,9 +130,9 @@ public class EntryBacking extends AbstractBacking {
 	public Boolean getHasAddPermission() {
 
 		if (hasAddPermission == null) {
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
-			long scopeGroupId = liferayFacesContext.getScopeGroupId();
-			hasAddPermission = liferayFacesContext.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
+			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
 					GuestbookBacking.MODEL, scopeGroupId, "ADD_ENTRY");
 		}
 
