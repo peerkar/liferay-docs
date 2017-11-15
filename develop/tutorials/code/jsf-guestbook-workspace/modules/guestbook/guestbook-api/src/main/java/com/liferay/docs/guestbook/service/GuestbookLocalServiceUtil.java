@@ -127,6 +127,12 @@ public class GuestbookLocalServiceUtil {
 		return getService().fetchGuestbookByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.docs.guestbook.model.Guestbook getFirstGuestbookByName(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFirstGuestbookByName(groupId, name);
+	}
+
 	/**
 	* Returns the guestbook with the primary key.
 	*

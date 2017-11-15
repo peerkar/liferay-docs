@@ -129,6 +129,13 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
 			groupId);
 	}
 
+	@Override
+	public com.liferay.docs.guestbook.model.Guestbook getFirstGuestbookByName(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _guestbookLocalService.getFirstGuestbookByName(groupId, name);
+	}
+
 	/**
 	* Returns the guestbook with the primary key.
 	*

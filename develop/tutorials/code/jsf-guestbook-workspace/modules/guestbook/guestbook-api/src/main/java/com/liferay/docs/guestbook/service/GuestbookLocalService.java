@@ -128,6 +128,10 @@ public interface GuestbookLocalService extends BaseLocalService,
 	public Guestbook fetchGuestbookByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Guestbook getFirstGuestbookByName(long groupId, java.lang.String name)
+		throws SystemException;
+
 	/**
 	* Returns the guestbook with the primary key.
 	*

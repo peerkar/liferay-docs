@@ -1135,6 +1135,261 @@ public class GuestbookUtil {
 	}
 
 	/**
+	* Returns all the guestbooks where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching guestbooks
+	*/
+	public static List<Guestbook> findByName(long groupId, java.lang.String name) {
+		return getPersistence().findByName(groupId, name);
+	}
+
+	/**
+	* Returns a range of all the guestbooks where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GuestbookModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of guestbooks
+	* @param end the upper bound of the range of guestbooks (not inclusive)
+	* @return the range of matching guestbooks
+	*/
+	public static List<Guestbook> findByName(long groupId,
+		java.lang.String name, int start, int end) {
+		return getPersistence().findByName(groupId, name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the guestbooks where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GuestbookModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of guestbooks
+	* @param end the upper bound of the range of guestbooks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching guestbooks
+	*/
+	public static List<Guestbook> findByName(long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<Guestbook> orderByComparator) {
+		return getPersistence()
+				   .findByName(groupId, name, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the guestbooks where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GuestbookModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of guestbooks
+	* @param end the upper bound of the range of guestbooks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching guestbooks
+	*/
+	public static List<Guestbook> findByName(long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<Guestbook> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByName(groupId, name, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first guestbook in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching guestbook
+	* @throws NoSuchGuestbookException if a matching guestbook could not be found
+	*/
+	public static Guestbook findByName_First(long groupId,
+		java.lang.String name, OrderByComparator<Guestbook> orderByComparator)
+		throws com.liferay.docs.guestbook.exception.NoSuchGuestbookException {
+		return getPersistence()
+				   .findByName_First(groupId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the first guestbook in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching guestbook, or <code>null</code> if a matching guestbook could not be found
+	*/
+	public static Guestbook fetchByName_First(long groupId,
+		java.lang.String name, OrderByComparator<Guestbook> orderByComparator) {
+		return getPersistence()
+				   .fetchByName_First(groupId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last guestbook in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching guestbook
+	* @throws NoSuchGuestbookException if a matching guestbook could not be found
+	*/
+	public static Guestbook findByName_Last(long groupId,
+		java.lang.String name, OrderByComparator<Guestbook> orderByComparator)
+		throws com.liferay.docs.guestbook.exception.NoSuchGuestbookException {
+		return getPersistence().findByName_Last(groupId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last guestbook in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching guestbook, or <code>null</code> if a matching guestbook could not be found
+	*/
+	public static Guestbook fetchByName_Last(long groupId,
+		java.lang.String name, OrderByComparator<Guestbook> orderByComparator) {
+		return getPersistence()
+				   .fetchByName_Last(groupId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the guestbooks before and after the current guestbook in the ordered set where groupId = &#63; and name = &#63;.
+	*
+	* @param guestbookId the primary key of the current guestbook
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next guestbook
+	* @throws NoSuchGuestbookException if a guestbook with the primary key could not be found
+	*/
+	public static Guestbook[] findByName_PrevAndNext(long guestbookId,
+		long groupId, java.lang.String name,
+		OrderByComparator<Guestbook> orderByComparator)
+		throws com.liferay.docs.guestbook.exception.NoSuchGuestbookException {
+		return getPersistence()
+				   .findByName_PrevAndNext(guestbookId, groupId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the guestbooks that the user has permission to view where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching guestbooks that the user has permission to view
+	*/
+	public static List<Guestbook> filterFindByName(long groupId,
+		java.lang.String name) {
+		return getPersistence().filterFindByName(groupId, name);
+	}
+
+	/**
+	* Returns a range of all the guestbooks that the user has permission to view where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GuestbookModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of guestbooks
+	* @param end the upper bound of the range of guestbooks (not inclusive)
+	* @return the range of matching guestbooks that the user has permission to view
+	*/
+	public static List<Guestbook> filterFindByName(long groupId,
+		java.lang.String name, int start, int end) {
+		return getPersistence().filterFindByName(groupId, name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the guestbooks that the user has permissions to view where groupId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GuestbookModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param start the lower bound of the range of guestbooks
+	* @param end the upper bound of the range of guestbooks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching guestbooks that the user has permission to view
+	*/
+	public static List<Guestbook> filterFindByName(long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<Guestbook> orderByComparator) {
+		return getPersistence()
+				   .filterFindByName(groupId, name, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the guestbooks before and after the current guestbook in the ordered set of guestbooks that the user has permission to view where groupId = &#63; and name = &#63;.
+	*
+	* @param guestbookId the primary key of the current guestbook
+	* @param groupId the group ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next guestbook
+	* @throws NoSuchGuestbookException if a guestbook with the primary key could not be found
+	*/
+	public static Guestbook[] filterFindByName_PrevAndNext(long guestbookId,
+		long groupId, java.lang.String name,
+		OrderByComparator<Guestbook> orderByComparator)
+		throws com.liferay.docs.guestbook.exception.NoSuchGuestbookException {
+		return getPersistence()
+				   .filterFindByName_PrevAndNext(guestbookId, groupId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the guestbooks where groupId = &#63; and name = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	*/
+	public static void removeByName(long groupId, java.lang.String name) {
+		getPersistence().removeByName(groupId, name);
+	}
+
+	/**
+	* Returns the number of guestbooks where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the number of matching guestbooks
+	*/
+	public static int countByName(long groupId, java.lang.String name) {
+		return getPersistence().countByName(groupId, name);
+	}
+
+	/**
+	* Returns the number of guestbooks that the user has permission to view where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the number of matching guestbooks that the user has permission to view
+	*/
+	public static int filterCountByName(long groupId, java.lang.String name) {
+		return getPersistence().filterCountByName(groupId, name);
+	}
+
+	/**
 	* Caches the guestbook in the entity cache if it is enabled.
 	*
 	* @param guestbook the guestbook
