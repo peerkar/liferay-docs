@@ -53,6 +53,13 @@ public class EntryLocalServiceUtil {
 		return getService().addEntry(entry);
 	}
 
+	public static com.liferay.docs.guestbook.model.Entry addEntry(
+		com.liferay.docs.guestbook.model.Entry entry, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addEntry(entry, userId);
+	}
+
 	public static com.liferay.docs.guestbook.model.Entry addEntry(long userId,
 		long guestbookId, java.lang.String name, java.lang.String email,
 		java.lang.String message,

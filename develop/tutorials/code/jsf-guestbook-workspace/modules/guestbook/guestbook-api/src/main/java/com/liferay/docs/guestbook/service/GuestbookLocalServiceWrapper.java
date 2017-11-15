@@ -47,6 +47,14 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
 
 	@Override
 	public com.liferay.docs.guestbook.model.Guestbook addGuestbook(
+		com.liferay.docs.guestbook.model.Guestbook guestbook, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _guestbookLocalService.addGuestbook(guestbook, userId);
+	}
+
+	@Override
+	public com.liferay.docs.guestbook.model.Guestbook addGuestbook(
 		long userId, java.lang.String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

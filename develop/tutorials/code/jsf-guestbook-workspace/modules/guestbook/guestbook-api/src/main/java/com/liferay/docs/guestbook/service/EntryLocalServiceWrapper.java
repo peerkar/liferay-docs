@@ -45,6 +45,14 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
+	public com.liferay.docs.guestbook.model.Entry addEntry(
+		com.liferay.docs.guestbook.model.Entry entry, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _entryLocalService.addEntry(entry, userId);
+	}
+
+	@Override
 	public com.liferay.docs.guestbook.model.Entry addEntry(long userId,
 		long guestbookId, java.lang.String name, java.lang.String email,
 		java.lang.String message,
