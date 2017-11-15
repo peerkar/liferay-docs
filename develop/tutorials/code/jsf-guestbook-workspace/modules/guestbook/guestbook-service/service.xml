@@ -47,6 +47,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+        <finder name="Name" return-type="Collection">
+        	<finder-column name="groupId"></finder-column>
+            <finder-column name="name"></finder-column>
+        </finder>
 		
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />

@@ -206,6 +206,18 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 		return guestbook;
 	}
 
+	public Guestbook getFirstGuestbookByName(long groupId, String name) throws SystemException {
+		Guestbook guestbook = null;
+
+		List<Guestbook> guestbooks = guestbookPersistence.findByName(groupId, name);
+
+		if ((guestbooks != null) && (guestbooks.size() > 0)) {
+			guestbook = guestbooks.get(0);
+		}
+
+		return guestbook;
+	}
+
 	public List<Guestbook> getGuestbooks(long groupId) {
 
 		return guestbookPersistence.findByGroupId(groupId);
