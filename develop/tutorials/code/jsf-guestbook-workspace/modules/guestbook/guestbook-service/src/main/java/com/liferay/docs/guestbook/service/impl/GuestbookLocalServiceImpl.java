@@ -112,6 +112,19 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
+	public Guestbook addGuestbook(Guestbook guestbook, long userId) throws PortalException, SystemException {
+		long guestbookId = counterLocalService.increment(Guestbook.class.getName());
+		guestbook.setGuestbookId(guestbookId);
+
+		guestbook = super.addGuestbook(guestbook);
+
+		resourceLocalService.addResources(guestbook.getCompanyId(), guestbook.getGroupId(), userId,
+			Guestbook.class.getName(), guestbookId, false, true, true);
+
+		return guestbook;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
 	public Guestbook updateGuestbook(
 		long userId, long guestbookId, String name,
 		ServiceContext serviceContext)

@@ -170,6 +170,19 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	public Entry addEntry(Entry entry, long userId) throws PortalException, SystemException {
+		long entryId = counterLocalService.increment(Entry.class.getName());
+		entry.setEntryId(entryId);
+
+		entry = super.addEntry(entry);
+
+		resourceLocalService.addResources(entry.getCompanyId(), entry.getGroupId(), userId, Entry.class.getName(),
+			entryId, false, true, true);
+
+		return entry;
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	public Entry deleteEntry(long entryId, ServiceContext serviceContext)
 		throws PortalException {
