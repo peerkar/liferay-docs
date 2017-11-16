@@ -35,19 +35,13 @@ import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 /**
  * @author  Vernon Singleton
  */
-@ManagedBean
+@ManagedBean(name = "entryBackingBean")
 @RequestScoped
 public class EntryBacking extends AbstractBacking {
 
 	private Boolean hasAddPermission;
 
 	private EntryLocalServiceTracker entryLocalServiceTracker;
-	
-	public EntryLocalService getEntryLocalService() {
-		EntryLocalService entryLocalService = entryLocalServiceTracker.getService();
-	
-		return entryLocalService;
-	}
 
 	@ManagedProperty(name = "guestbookBacking", value = "#{guestbookBacking}")
 	protected GuestbookBacking guestbookBacking;
@@ -68,7 +62,8 @@ public class EntryBacking extends AbstractBacking {
 	public void delete(Entry entry) {
 
 		try {
-			getEntryLocalService().deleteEntry(entry);
+			EntryLocalService entryLocalService = entryLocalServiceTracker.getService();
+			entryLocalService.deleteEntry(entry);
 			addGlobalSuccessInfoMessage();
 		}
 		catch (Exception e) {
@@ -105,12 +100,13 @@ public class EntryBacking extends AbstractBacking {
 		entry.setUserId(LiferayPortletHelperUtil.getUserId(facesContext));
 
 		try {
+			EntryLocalService entryLocalService = entryLocalServiceTracker.getService();
 
 			if (entry.getEntryId() == 0) {
-				getEntryLocalService().addEntry(entry, LiferayPortletHelperUtil.getUserId(facesContext));
+				entryLocalService.addEntry(entry, LiferayPortletHelperUtil.getUserId(facesContext));
 			}
 			else {
-				getEntryLocalService().updateEntry(entry);
+				entryLocalService.updateEntry(entry);
 			}
 
 			addGlobalSuccessInfoMessage();
