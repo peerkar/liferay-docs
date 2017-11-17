@@ -24,12 +24,12 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
-import com.liferay.docs.guestbook.service.persistence.EntryUtil;
 import com.liferay.docs.guestbook.wrappers.Entry;
 import com.liferay.docs.guestbook.service.EntryLocalServiceTracker;
 import com.liferay.docs.guestbook.service.EntryLocalService;
 
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
+import com.liferay.faces.util.context.FacesContextHelperUtil;
 
 
 /**
@@ -47,12 +47,26 @@ public class EntryBacking extends AbstractBacking {
 	protected GuestbookBacking guestbookBacking;
 
 	public void add() {
-		Entry entry = new Entry(EntryUtil.create(0L));
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		entry.setGroupId(LiferayPortletHelperUtil.getScopeGroupId(facesContext));
-		entry.setGuestbookId(guestbookBacking.getSelectedGuestbook().getGuestbookId());
-		guestbookBacking.setSelectedEntry(entry);
-		guestbookBacking.editEntry();
+
+		try {
+
+			if (!entryLocalServiceTracker.isEmpty()) {
+				EntryLocalService entryLocalService = entryLocalServiceTracker.getService();
+				Entry entry = new Entry(entryLocalService.createEntry(0L));
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				entry.setGroupId(LiferayPortletHelperUtil.getScopeGroupId(facesContext));
+				entry.setGuestbookId(guestbookBacking.getSelectedGuestbook().getGuestbookId());
+				guestbookBacking.setSelectedEntry(entry);
+				guestbookBacking.editEntry();
+			}
+			else {
+				FacesContextHelperUtil.addGlobalErrorMessage("is-temporarily-unavailable", "User service");
+			}
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void cancel() {

@@ -30,12 +30,12 @@ import com.liferay.docs.guestbook.service.EntryLocalService;
 import com.liferay.docs.guestbook.service.EntryLocalServiceTracker;
 import com.liferay.docs.guestbook.service.GuestbookLocalService;
 import com.liferay.docs.guestbook.service.GuestbookLocalServiceTracker;
-import com.liferay.docs.guestbook.service.persistence.GuestbookUtil;
 import com.liferay.docs.guestbook.wrappers.Entry;
 
 import com.liferay.docs.guestbook.wrappers.Guestbook;
 
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
+import com.liferay.faces.util.context.FacesContextHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 
@@ -69,11 +69,25 @@ public class GuestbookBacking extends AbstractBacking {
 	public void add() {
 		setOriginalGuestbook(getSelectedGuestbook());
 
-		Guestbook guestbook = new Guestbook(GuestbookUtil.create(0L));
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		guestbook.setGroupId(LiferayPortletHelperUtil.getScopeGroupId(facesContext));
-		setSelectedGuestbook(guestbook);
-		editGuestbook();
+		try {
+
+			if (!guestbookLocalServiceTracker.isEmpty()) {
+				GuestbookLocalService guestbookLocalService = guestbookLocalServiceTracker.getService();
+				Guestbook guestbook = new Guestbook(guestbookLocalService.createGuestbook(0L));
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				guestbook.setGroupId(LiferayPortletHelperUtil.getScopeGroupId(facesContext));
+				setSelectedGuestbook(guestbook);
+				editGuestbook();
+			}
+			else {
+				FacesContextHelperUtil.addGlobalErrorMessage("is-temporarily-unavailable", "Guestbook service");
+			}
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void cancel() {
@@ -97,7 +111,7 @@ public class GuestbookBacking extends AbstractBacking {
 			if (defaultGuestbook == null) {
 				logger.info("postConstruct: creating a default guestbook named " + DEFAULT_GUESTBOOK_NAME + " ...");
 
-				Guestbook guestbook = new Guestbook(GuestbookUtil.create(0L));
+				Guestbook guestbook = new Guestbook(guestbookLocalService.createGuestbook(0L));
 				guestbook.setName(DEFAULT_GUESTBOOK_NAME);
 				guestbook.setGroupId(scopeGroupId);
 				guestbook.setCompanyId(LiferayPortletHelperUtil.getCompanyId(facesContext));
