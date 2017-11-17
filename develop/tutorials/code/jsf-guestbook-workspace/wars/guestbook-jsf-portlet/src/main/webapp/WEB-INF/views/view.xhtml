@@ -8,13 +8,13 @@
 	<h:body>
 		<c:choose>
 			<c:when test="#{guestbookBacking.editingGuestbook}">
-				<ui:include src="/views/guestbook.xhtml" />
+				<ui:include src="/WEB-INF/views/guestbook.xhtml" />
 			</c:when>
 			<c:when test="#{guestbookBacking.editingEntry}">
-				<ui:include src="/views/entry.xhtml" />
+				<ui:include src="/WEB-INF/views/entry.xhtml" />
 			</c:when>
 			<c:otherwise>
-				<ui:include src="/views/master.xhtml" />
+				<ui:include src="/WEB-INF/views/master.xhtml" />
 			</c:otherwise>
 		</c:choose>
 	</h:body>
