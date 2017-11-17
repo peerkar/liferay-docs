@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.liferay.docs.guestbook.model.GuestbookWrapper;
 
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
-import com.liferay.faces.util.jsp.PageContextAdapter;
-import com.liferay.faces.util.jsp.StringJspWriter;
+//import com.liferay.faces.util.jsp.PageContextAdapter;
+//import com.liferay.faces.util.jsp.StringJspWriter;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -79,7 +79,7 @@ public class Guestbook extends GuestbookWrapper {
 		return permissible;
 	}
 
-	public String getPermissionsUrl() {
+	/*public String getPermissionsUrl() {
 
 		if (permissionsUrl == null) {
 
@@ -122,7 +122,7 @@ public class Guestbook extends GuestbookWrapper {
 		}
 
 		return permissionsUrl;
-	}
+	}*/
 
 	public Boolean getUpdateable() {
 

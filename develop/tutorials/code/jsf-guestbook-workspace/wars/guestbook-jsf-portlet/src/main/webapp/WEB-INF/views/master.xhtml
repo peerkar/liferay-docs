@@ -45,11 +45,11 @@
 					<f:ajax render="@all" />
 				</h:commandButton>
 			</h:panelGroup>
-			<h:panelGroup rendered="#{guestbookBacking.selectedGuestbook.permissible}">
+			<!--  <h:panelGroup rendered="#{guestbookBacking.selectedGuestbook.permissible}">
 				<h:outputLink styleClass="btn btn-default" value="#{guestbookBacking.selectedGuestbook.permissionsUrl}">
 					<h:outputText value=" #{i18n['permissions']} " />
 				</h:outputLink>
-			</h:panelGroup>
+			</h:panelGroup>-->
 		</div>
 		<br />
 		
@@ -85,11 +85,11 @@
 								<f:ajax render="@all" />
 							</h:commandButton>
 						</h:panelGroup>
-						<h:panelGroup rendered="#{entry.permissible}">
+						<!-- <h:panelGroup rendered="#{entry.permissible}">
 							<h:outputLink styleClass="btn btn-default" value="#{entry.permissionsUrl}">
 								<h:outputText value=" #{i18n['permissions']} " />
 							</h:outputLink>
-						</h:panelGroup>
+						</h:panelGroup>-->
 					</h:column>
 				</h:dataTable>
 			</c:otherwise>
