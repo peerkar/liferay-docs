@@ -3,8 +3,10 @@
 <f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-	<h:head />
+	<h:head>
+		<h:outputStylesheet library="css" name="main.css" />
+		<h:outputScript library="js" name="main.js" />
+	</h:head>
 	<h:body>
 		<c:choose>
 			<c:when test="#{guestbookBacking.editingGuestbook}">
@@ -18,5 +20,4 @@
 			</c:otherwise>
 		</c:choose>
 	</h:body>
-
 </f:view>
