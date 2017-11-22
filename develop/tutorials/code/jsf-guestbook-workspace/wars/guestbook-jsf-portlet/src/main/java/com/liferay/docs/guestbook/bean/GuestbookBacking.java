@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author  Vernon Singleton
  */
-@ManagedBean(name = "guestbookBackingBean")
+@ManagedBean
 @ViewScoped
 public class GuestbookBacking extends AbstractBacking {
 
@@ -52,7 +52,7 @@ public class GuestbookBacking extends AbstractBacking {
 	private GuestbookLocalServiceTracker guestbookLocalServiceTracker;
 	private EntryLocalServiceTracker entryLocalServiceTracker;
 	
-	private Boolean hasAddPermission;
+	private Boolean permittedToAdd;
 
 	// Private Data Members
 	private Guestbook originalGuestbook;
@@ -324,20 +324,16 @@ public class GuestbookBacking extends AbstractBacking {
 		this.guestbooks = guestbooks;
 	}
 
-	public Boolean getHasAddPermission() {
+	public boolean isPermittedToAdd() {
 
-		if (hasAddPermission == null) {
+		if (permittedToAdd == null) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
-			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
+			permittedToAdd = LiferayPortletHelperUtil.getThemeDisplay().getPermissionChecker().hasPermission(scopeGroupId,
 					MODEL, scopeGroupId, "ADD_GUESTBOOK");
 		}
 
-		return hasAddPermission;
-	}
-
-	public void setHasAddPermission(Boolean hasAddPermission) {
-		this.hasAddPermission = hasAddPermission;
+		return permittedToAdd;
 	}
 
 	public boolean isEditingGuestbook() {
