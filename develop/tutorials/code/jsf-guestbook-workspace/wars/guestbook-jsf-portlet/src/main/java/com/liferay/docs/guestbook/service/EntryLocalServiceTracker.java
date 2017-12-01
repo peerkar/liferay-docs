@@ -1,5 +1,7 @@
 package com.liferay.docs.guestbook.service;
 
+import com.liferay.docs.guestbook.service.EntryLocalService;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
