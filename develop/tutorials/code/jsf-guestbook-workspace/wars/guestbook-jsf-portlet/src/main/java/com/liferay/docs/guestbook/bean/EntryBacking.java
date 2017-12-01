@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import com.liferay.docs.guestbook.wrappers.Entry;
-import com.liferay.docs.guestbook.service.EntryLocalServiceTracker;
+import com.liferay.docs.guestbook.services.EntryLocalServiceTracker;
 import com.liferay.docs.guestbook.service.EntryLocalService;
 
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
