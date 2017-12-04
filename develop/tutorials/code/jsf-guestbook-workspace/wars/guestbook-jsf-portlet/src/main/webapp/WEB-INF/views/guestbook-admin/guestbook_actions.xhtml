@@ -8,7 +8,7 @@
 
 	<h:form>
 		<h:commandButton action="#{guestbookBacking.add}"
-			rendered="#{guestbookBacking.hasAddPermission}"
+			rendered="#{guestbookBacking.permittedToAdd}"
 			styleClass="btn btn-default" value=" #{i18n['add-guestbook']} ">
 			<f:ajax render="@all" />
 		</h:commandButton>

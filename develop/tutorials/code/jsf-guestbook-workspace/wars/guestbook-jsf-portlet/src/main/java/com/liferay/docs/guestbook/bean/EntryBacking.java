@@ -35,11 +35,11 @@ import com.liferay.faces.util.context.FacesContextHelperUtil;
 /**
  * @author  Vernon Singleton
  */
-@ManagedBean(name = "entryBackingBean")
+@ManagedBean
 @RequestScoped
 public class EntryBacking extends AbstractBacking {
 
-	private Boolean hasAddPermission;
+	private Boolean permittedToAdd;
 
 	private EntryLocalServiceTracker entryLocalServiceTracker;
 
@@ -137,20 +137,16 @@ public class EntryBacking extends AbstractBacking {
 		this.guestbookBacking = guestbookBacking;
 	}
 
-	public Boolean getHasAddPermission() {
+	public Boolean isPermittedToAdd() {
 
-		if (hasAddPermission == null) {
+		if (permittedToAdd == null) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			long scopeGroupId = LiferayPortletHelperUtil.getScopeGroupId(facesContext);
-			hasAddPermission = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
+			permittedToAdd = LiferayPortletHelperUtil.getThemeDisplay(facesContext).getPermissionChecker().hasPermission(scopeGroupId,
 					GuestbookBacking.MODEL, scopeGroupId, "ADD_ENTRY");
 		}
 
-		return hasAddPermission;
-	}
-
-	public void setHasAddPermission(Boolean hasAddPermission) {
-		this.hasAddPermission = hasAddPermission;
+		return permittedToAdd;
 	}
 
 }
