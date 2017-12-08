@@ -2,7 +2,7 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:portal="http://liferay.com/faces/portal" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form>
 		
@@ -45,11 +45,12 @@
 					<f:ajax render="@all" />
 				</h:commandButton>
 			</h:panelGroup>
-			<!--  <h:panelGroup rendered="#{guestbookBacking.selectedGuestbook.permissible}">
-				<h:outputLink styleClass="btn btn-default" value="#{guestbookBacking.selectedGuestbook.permissionsUrl}">
+			<portal:permissionsURL resourcePrimKey="#{guestbookBacking.portletResourcePrimaryKey}" var="permissionsUrl" />
+			<h:panelGroup rendered="#{guestbookBacking.selectedGuestbook.permissible}">
+				<h:outputLink styleClass="btn btn-default" value="#{permissionsUrl}">
 					<h:outputText value=" #{i18n['permissions']} " />
 				</h:outputLink>
-			</h:panelGroup>-->
+			</h:panelGroup>
 		</div>
 		<br />
 		
@@ -85,11 +86,12 @@
 								<f:ajax render="@all" />
 							</h:commandButton>
 						</h:panelGroup>
-						<!-- <h:panelGroup rendered="#{entry.permissible}">
-							<h:outputLink styleClass="btn btn-default" value="#{entry.permissionsUrl}">
+						<portal:permissionsURL resourcePrimKey="#{entryBacking.portletResourcePrimaryKey}" var="permissionsUrl" />
+						<h:panelGroup rendered="#{entry.permissible}">
+							<h:outputLink styleClass="btn btn-default" value="#{permissionsUrl}">
 								<h:outputText value=" #{i18n['permissions']} " />
 							</h:outputLink>
-						</h:panelGroup>-->
+						</h:panelGroup>
 					</h:column>
 				</h:dataTable>
 			</c:otherwise>

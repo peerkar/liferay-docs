@@ -30,6 +30,8 @@ import com.liferay.docs.guestbook.service.EntryLocalService;
 
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.faces.util.context.FacesContextHelperUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 
 
 /**
@@ -42,6 +44,8 @@ public class EntryBacking extends AbstractBacking {
 	private Boolean permittedToAdd;
 
 	private EntryLocalServiceTracker entryLocalServiceTracker;
+
+	private String portletResourcePrimaryKey;
 
 	@ManagedProperty(name = "guestbookBacking", value = "#{guestbookBacking}")
 	protected GuestbookBacking guestbookBacking;
@@ -91,6 +95,19 @@ public class EntryBacking extends AbstractBacking {
 	public void edit(Entry entry) {
 		guestbookBacking.setSelectedEntry(entry);
 		guestbookBacking.editEntry();
+	}
+
+	public String getPortletResourcePrimaryKey() {
+
+		if (portletResourcePrimaryKey == null) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long plid = LiferayPortletHelperUtil.getPlid(facesContext);
+			Portlet portlet = LiferayPortletHelperUtil.getPortlet(facesContext);
+			String portletId = portlet.getPortletId();
+			portletResourcePrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
+		}
+ 
+		return portletResourcePrimaryKey;
 	}
 
 	@PostConstruct

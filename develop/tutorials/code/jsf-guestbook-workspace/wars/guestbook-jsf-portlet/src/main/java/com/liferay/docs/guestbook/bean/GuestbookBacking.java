@@ -37,6 +37,8 @@ import com.liferay.docs.guestbook.wrappers.Guestbook;
 import com.liferay.faces.portal.context.LiferayPortletHelperUtil;
 import com.liferay.faces.util.context.FacesContextHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 
 
 /**
@@ -66,6 +68,8 @@ public class GuestbookBacking extends AbstractBacking {
 	private boolean editingGuestbook;
 	private boolean editingEntry;
 
+	private String portletResourcePrimaryKey;
+		
 	public void add() {
 		setOriginalGuestbook(getSelectedGuestbook());
 
@@ -184,6 +188,19 @@ public class GuestbookBacking extends AbstractBacking {
 	public void editGuestbook() {
 		editingEntry = false;
 		editingGuestbook = true;
+	}
+
+	public String getPortletResourcePrimaryKey() {
+
+		if (portletResourcePrimaryKey == null) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			long plid = LiferayPortletHelperUtil.getPlid(facesContext);
+			Portlet portlet = LiferayPortletHelperUtil.getPortlet(facesContext);
+			String portletId = portlet.getPortletId();
+			portletResourcePrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
+		}
+ 
+		return portletResourcePrimaryKey;
 	}
 
 	@PostConstruct
