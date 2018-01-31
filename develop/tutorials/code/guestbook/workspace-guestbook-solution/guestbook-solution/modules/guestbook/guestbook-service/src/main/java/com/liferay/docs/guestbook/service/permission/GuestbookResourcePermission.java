@@ -16,12 +16,12 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 @Component(
 		immediate = true,
 		property = {
-			"resource.name=" + GuestbookModelPermission.RESOURCE_NAME
+			"resource.name=" + GuestbookResourcePermission.RESOURCE_NAME
 		},
 		service = ResourcePermissionChecker.class
 	)
 
-        public class GuestbookModelPermission extends BaseResourcePermissionChecker  {
+        public class GuestbookResourcePermission extends BaseResourcePermissionChecker  {
 
             public static final String RESOURCE_NAME = "com.liferay.docs.guestbook";
 

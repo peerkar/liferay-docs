@@ -33,6 +33,15 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
                 }
             }
 
+			@Override
+			public void checkBaseModel(
+					PermissionChecker permissionChecker, long groupId, long primaryKey,
+					String actionId)
+				throws PortalException {
+
+				check(permissionChecker, primaryKey, actionId);
+			}
+
             public static boolean contains(PermissionChecker permissionChecker,
                     long entryId, String actionId) throws PortalException,
                     SystemException {
@@ -59,15 +68,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
                                 actionId);
 
             }
-
-			@Override
-			public void checkBaseModel(
-					PermissionChecker permissionChecker, long groupId, long primaryKey,
-					String actionId)
-				throws PortalException {
-
-				check(permissionChecker, primaryKey, actionId);
-			}
 
 			@Reference(unbind = "-")
 			protected void setEntryLocalService(

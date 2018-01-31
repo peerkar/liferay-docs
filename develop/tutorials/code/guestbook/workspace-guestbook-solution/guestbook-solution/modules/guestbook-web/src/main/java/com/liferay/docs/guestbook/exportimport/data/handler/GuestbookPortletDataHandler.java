@@ -14,7 +14,7 @@ import com.liferay.docs.guestbook.model.Entry;
 import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.service.EntryLocalService;
 import com.liferay.docs.guestbook.service.GuestbookLocalService;
-import com.liferay.docs.guestbook.service.permission.GuestbookModelPermission;
+import com.liferay.docs.guestbook.service.permission.GuestbookResourcePermission;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -93,7 +93,7 @@ public class GuestbookPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addPortletPermissions(
-			GuestbookModelPermission.RESOURCE_NAME);
+			GuestbookResourcePermission.RESOURCE_NAME);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -128,7 +128,7 @@ public class GuestbookPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.importPortletPermissions(
-			GuestbookModelPermission.RESOURCE_NAME);
+			GuestbookResourcePermission.RESOURCE_NAME);
 
 		Element guestbooksElement =
 			portletDataContext.getImportDataGroupElement(Guestbook.class);

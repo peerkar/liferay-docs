@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.service.base.GuestbookServiceBaseImpl;
-import com.liferay.docs.guestbook.service.permission.GuestbookModelPermission;
+import com.liferay.docs.guestbook.service.permission.GuestbookResourcePermission;
 import com.liferay.docs.guestbook.service.permission.GuestbookPermission;
 import com.liferay.docs.guestbook.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,7 +52,7 @@ public class GuestbookServiceImpl extends GuestbookServiceBaseImpl {
 	public Guestbook addGuestbook(long userId, String name, ServiceContext serviceContext) 
 			throws SystemException, PortalException {
 
-		GuestbookModelPermission.check(getPermissionChecker(),
+		GuestbookResourcePermission.check(getPermissionChecker(),
 				serviceContext.getScopeGroupId(), ActionKeys.ADD_GUESTBOOK);
 
 		return guestbookLocalService.addGuestbook(userId, name, serviceContext);

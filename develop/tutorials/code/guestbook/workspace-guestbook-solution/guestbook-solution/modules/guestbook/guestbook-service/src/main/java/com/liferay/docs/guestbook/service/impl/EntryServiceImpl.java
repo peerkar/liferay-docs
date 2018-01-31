@@ -21,7 +21,7 @@ import java.util.List;
 import com.liferay.docs.guestbook.model.Entry;
 import com.liferay.docs.guestbook.service.base.EntryServiceBaseImpl;
 import com.liferay.docs.guestbook.service.permission.EntryPermission;
-import com.liferay.docs.guestbook.service.permission.GuestbookModelPermission;
+import com.liferay.docs.guestbook.service.permission.GuestbookResourcePermission;
 import com.liferay.docs.guestbook.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -52,7 +52,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 	public Entry addEntry(long userId, long guestbookId, String name, String email, String message,
 			ServiceContext serviceContext) throws PortalException, SystemException {
 
-		GuestbookModelPermission.check(getPermissionChecker(), serviceContext.getScopeGroupId(), ActionKeys.ADD_ENTRY);
+		GuestbookResourcePermission.check(getPermissionChecker(), serviceContext.getScopeGroupId(), ActionKeys.ADD_ENTRY);
 
 		return entryLocalService.addEntry(userId, guestbookId, name, email, message, serviceContext);
 	}

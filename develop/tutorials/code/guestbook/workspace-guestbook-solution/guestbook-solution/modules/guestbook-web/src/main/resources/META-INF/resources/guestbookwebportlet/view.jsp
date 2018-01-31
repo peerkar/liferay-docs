@@ -69,7 +69,7 @@
 <aui:button-row cssClass="guestbook-buttons">
 
 	
-     <c:if test='<%= GuestbookModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_GUESTBOOK) %>'>
+     <c:if test='<%= GuestbookResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_GUESTBOOK) %>'>
  
   		
 		<portlet:renderURL var="addGuestbookURL">

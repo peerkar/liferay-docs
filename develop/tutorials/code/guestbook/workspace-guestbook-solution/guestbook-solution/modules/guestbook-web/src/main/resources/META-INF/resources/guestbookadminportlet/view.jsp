@@ -20,7 +20,7 @@
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<c:if test='<%= GuestbookModelPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_GUESTBOOK) %>'>
+<c:if test='<%= GuestbookResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_GUESTBOOK) %>'>
 	<aui:button-row cssClass="guestbook-admin-buttons">
 		<portlet:renderURL var="addGuestbookURL">
 			<portlet:param name="mvcPath"
